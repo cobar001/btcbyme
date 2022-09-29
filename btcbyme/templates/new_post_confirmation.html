@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container">
+        <h2 class="page-header">Confirm New Post</h2>
+        <h3>Candidate Post ID: {{ post.id }}</h3>
+        <h3>Post price: {{ post_price }} USD (excluding the blockchain network fee).</h3>
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.btc_price }} <small>{{ post.currency }}/BTC</small></h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ post.author_username }}</h6>
+                    <p><b>Markup:</b><br>{{ post.markup_percentage }}</p>
+                    <p><b>Transaction Range:</b><br>{{ post.min_tx }} - {{ post.max_tx }}</p>
+                    <p>Location:<br>{{ post.city }}</p>
+                    <div>
+                        <small class="text-muted">Date posted: {{ post.date_posted }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <label for="post-payment-button" class="form-label" style="margin-top: 30px;">1. Complete the payment of {{ post_price }} USD (excluding the blockchain network fee):</label>
+            <button id="post-payment-button" type="button" class="col btn btn-primary" onclick="presentInvoiceModal();">Make Payment</button>
+            <label for="post-confirmation-button" class="form-label" style="margin-top: 30px;">2. Once the payment is made, complete the post creation request:</label>
+            {{ form.submit(class="col btn btn-primary", id="post-confirmation-button") }}
+        </form>
+    </div>
+    <script>
+        if (!window.btcpay) {
+            var head = document.getElementsByTagName('head')[0];
+            var script = document.createElement('script');
+            script.src='{{ get_btcpay_server_domain() }}/modal/btcpay.js';
+            script.type = 'text/javascript';
+            head.append(script);
+        }
+        function presentInvoiceModal() {
+            window.btcpay.showInvoice('{{ invoice_id }}');
+        }
+    </script>
+{% endblock %}

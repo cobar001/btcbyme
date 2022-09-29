@@ -1,0 +1,8 @@
+from btcbyme.utilities import secrets
+
+
+class Config:
+    SECRET_KEY = secrets.CSRF_SECRET_KEY
+    SQLALCHEMY_DATABASE_URI = secrets.SQLALCHEMY_DATABASE_URI
+    MAPBOX_ACCESS_TOKEN = secrets.MAPBOX_ACCESS_TOKEN
+    MESSAGE_ENCRYPTION_KEY = secrets.MESSAGE_ENCRYPTION_KEY

@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container">
+        <h5 style="margin-top: 30px;">Send {{ post_data.author_username }} a message indicating your interest in their <a href="{{ post_data.post_url }}">post</a>. Please include the transaction amount that you're interested in, a potential public meeting location, and any other relevant information pertaining to the potential transaction.</h5>
+        <form method="POST" action="" style="margin-top: 15px;">
+            {{ form.hidden_tag() }}
+            {% if form.content.errors %}
+                {{ form.content(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.content.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.content(class="form-control") }}
+            {% endif %}
+            <small class="form-text text-muted">The maximum character count is 140.</small>
+            <div style="margin-top: 15px;">
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+        </form>
+    </div>
+{% endblock %}

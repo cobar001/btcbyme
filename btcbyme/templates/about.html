@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container">
+        <div style="text-align: center;">
+            <img src="{{ url_for('static', filename='images/btcbyme.png') }}" width="300px" height="300px" alt="" style="margin-top: 30px;">
+        </div>
+        <h2 class="page-header" style="margin-top: 60px;">About</h2>
+        <p>BtcByMe was created with the purpose of providing bitcoin users with a means to exchange fiat currencies for bitcoin in a private, personal, and <i>offline</i> manner. The site purposefully collects as little information as possible to provide a meaningful platform for users to connect and coordinate in-person meetings to make transactions. All transaction details are left for the users to agree upon, including time and location of the meeting, means by which the fiat and bitcoin may be exchanged (cash, wire transfer, on-chain transaction, LN transaction, etc.), and how to handle potential disputes.</p>
+        <p>Most bitcoin-fiat trades these days occur online through a variety of different services, most of which require you to provide personal information that is then stored on their servers (not to mention the recording of each and all of the different transactions one makes through their wallets, etc.). Though their services are quite convenient and have their use-cases, there should also be additional options that make acquiring bitcoin private, discrete, and undocumented by anything besides the bitcoin blockchain itself.</p>
+        <p>BtcByMe is currently a very small and relatively new operation based in Minneapolis, Minnesota, United States. Any feedback and financial donations are very welcome.</p>
+        <p>All Bitcoin prices are supplied via <a href="https://www.coingecko.com/en" target="_blank" rel="noopener noreferrer">CoinGecko</a>.</p>
+        <h2>Potential future work</h2>
+        <ol>
+            <li>Improve map/location UI/UX in post creation and search, including autocomplete for places and potentially a map GUI.</li>
+            <li>Opt-in email notifications?</li>
+            <li>Design improvements?</li>
+            <li>Please contact <a href="mailto:support@btcbytme.com">support@btcbytme.com</a> for additional feature requests.</li>
+        </ol>
+        <h2>Donate here:</h2>
+        <!-- Following script and form copied from BTCPay Server -->
+        <script>if(!window.btcpay){    var head = document.getElementsByTagName('head')[0];   var script = document.createElement('script');   script.src='https://busybtc.dev/modal/btcpay.js';   script.type = 'text/javascript';   head.append(script);}function onBTCPayFormSubmit(event){    var xhttp = new XMLHttpRequest();    xhttp.onreadystatechange = function() {        if (this.readyState == 4 && this.status == 200) {            if(this.status == 200 && this.responseText){                var response = JSON.parse(this.responseText);                window.btcpay.showInvoice(response.invoiceId);            }        }    };    xhttp.open("POST", event.target.getAttribute('action'), true);    xhttp.send(new FormData( event.target ));}</script><style type="text/css"> .btcpay-form { display: inline-flex; align-items: center; justify-content: center; } .btcpay-form--inline { flex-direction: row; } .btcpay-form--block { flex-direction: column; } .btcpay-form--inline .submit { margin-left: 15px; } .btcpay-form--block select { margin-bottom: 10px; } .btcpay-form .btcpay-custom-container{ text-align: center; }.btcpay-custom { display: flex; align-items: center; justify-content: center; } .btcpay-form .plus-minus { cursor:pointer; font-size:25px; line-height: 25px; background: #DFE0E1; height: 30px; width: 45px; border:none; border-radius: 60px; margin: auto 5px; display: inline-flex; justify-content: center; } .btcpay-form select { -moz-appearance: none; -webkit-appearance: none; appearance: none; color: currentColor; background: transparent; border:1px solid transparent; display: block; padding: 1px; margin-left: auto; margin-right: auto; font-size: 11px; cursor: pointer; } .btcpay-form select:hover { border-color: #ccc; } #btcpay-input-price { -moz-appearance: none; -webkit-appearance: none; border: none; box-shadow: none; text-align: center; font-size: 25px; margin: auto; border-radius: 5px; line-height: 35px; background: #fff; } #btcpay-input-price::-webkit-outer-spin-button, #btcpay-input-price::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; } </style>
+        <form method="POST"  onsubmit="onBTCPayFormSubmit(event);return false"  action="https://busybtc.dev/api/v1/invoices" class="btcpay-form btcpay-form--block">
+            <input type="hidden" name="storeId" value="13dmJihKiBc4UbDFRKDYrCrQku6gJP39m1n2zRcgbYni" />
+            <input type="hidden" name="jsonResponse" value="true" />
+            <div class="btcpay-custom-container">
+                <div class="btcpay-custom">
+                    <button class="plus-minus" onclick="event.preventDefault(); var price = parseInt(document.querySelector('#btcpay-input-price').value); if ('-' == '-' && (price - 1) < 1) { return; } document.querySelector('#btcpay-input-price').value = parseInt(document.querySelector('#btcpay-input-price').value) - 1;">-</button>
+                    <input id="btcpay-input-price" name="price" type="text" min="1" max="200" step="1" value="10" style="width: 3em;" oninput="event.preventDefault();isNaN(event.target.value) || event.target.value <= 0 ? document.querySelector('#btcpay-input-price').value = 10 : event.target.value"  />
+                    <button class="plus-minus" onclick="event.preventDefault(); var price = parseInt(document.querySelector('#btcpay-input-price').value); if ('+' == '-' && (price - 1) < 1) { return; } document.querySelector('#btcpay-input-price').value = parseInt(document.querySelector('#btcpay-input-price').value) + 1;">+</button>
+                </div>
+                <select name="currency">
+                    <option value="USD" selected>USD</option>
+                    <option value="GBP">GBP</option>
+                    <option value="EUR">EUR</option>
+                    <option value="BTC">BTC</option>
+                </select>
+            </div>
+            <button type="submit" class="submit" name="submit" style="min-width:209px; min-height:57px; border-radius: 4px;border-style: none;background-color: #0f3b21;" alt="Pay with BtcPay, Self-Hosted Bitcoin Payment Processor"><span style="color:#fff">Donate with</span>
+                <img src="https://busybtc.dev/img/logo.svg" style="height:57px;display:inline-block;padding: 5% 0 5% 5px;">
+            </button>
+        </form>
+    </div>
+{% endblock %}

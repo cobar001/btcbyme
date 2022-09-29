@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container">
+        <h2 class="page-header">Subject post: <a href="{{ thread_data.post_url }}">{{ thread_data.post_url }}</a></h2>
+        <div>
+            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal">
+                Delete Thread
+            </button>
+            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Delete message thread <br>{{ thread_data.id }}?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            This will delete this message thread, along with all messages enclosed, from the database. Neither participants will be able to access the deleted thread or messages once this is done.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-danger" onclick="location.href='{{ url_for('messages.delete_message_thread', thread_id=thread_data.id) }}'">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="thread_messages" style="height: 400px; margin-top: 30px; overflow-x: hidden; overflow-y: auto;">
+            {% if messages_data %}
+                {% for message in messages_data %}
+                    <div class="card" style="width: 100%;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ message.content }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ message.sender_username }}</h6>
+                            <div>
+                                <small class="text-muted">Date sent: {{ message.date_sent_local }}</small>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="border-top pt-3" style="margin-top: 30px;">
+            <form method="POST" action="">
+                {{ form.hidden_tag() }}
+                {% if form.content.errors %}
+                    {{ form.content(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.content.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.content(class="form-control") }}
+                {% endif %}
+                <small class="form-text text-muted">The maximum character count is 140.</small>
+                <div style="margin-top: 15px;">
+                    {{ form.submit(class="btn btn-primary", style="width: 100%;") }}
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        let objDiv = document.getElementById("thread_messages");
+        objDiv.scrollTop = objDiv.scrollHeight;
+    </script>
+{% endblock %}

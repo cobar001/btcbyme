@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container">
+        <div class="col">
+            <h2 class="page-header">Post ID: {{ post.id }}</h2>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.btc_price }} <small>{{ post.currency }}/BTC</small></h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ post.author_username }}</h6>
+                    <p><b>Markup:</b><br>{{ post.markup_percentage }}</p>
+                    <p><b>Transaction Range:</b><br>{{ post.min_tx }} - {{ post.max_tx }}</p>
+                    <p>Location:<br>{{ post.city }}</p>
+                    <div>
+                        <small class="text-muted">Date posted: {{ post.date_posted }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

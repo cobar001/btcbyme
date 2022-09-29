@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container">
+        <h2 class="page-header">How it works for Buyers</h2>
+        <div class="row">
+            <div class="col-6">
+                <div class="card" style="text-align: center; padding: 30px 10px 30px 10px;">
+                    <div>
+                        <img src="{{ url_for('static', filename='images/search.svg') }}" width="100px" height="100px" alt="">
+                    </div>
+                    <p style="margin-top: 15px;">1. <a href="{{ url_for('posts.search_posts') }}">Search</a> for posts that meet your interest.</p>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card" style="text-align: center; padding: 30px 10px 30px 10px;">
+                    <div>
+                        <img src="{{ url_for('static', filename='images/message-square.svg') }}" width="100px" height="100px" alt="">
+                    </div>
+                    <p style="margin-top: 15px;">2. Send a message to the owner of the post.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="card" style="text-align: center; padding: 30px 10px 30px 10px;">
+                    <div>
+                        <img src="{{ url_for('static', filename='images/map.svg') }}" width="100px" height="100px" alt="">
+                    </div>
+                    <p style="margin-top: 15px;">3. Discuss exchange details, including location, time, transaction amount, and transaction means (cash, wire, lightning, etc.).</p>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card" style="text-align: center; padding: 30px 10px 30px 10px;">
+                    <div>
+                        <img src="{{ url_for('static', filename='images/repeat.svg') }}" width="100px" height="100px" alt="">
+                    </div>
+                    <p style="margin-top: 15px;">4. Meet IRL and complete the planned exchange.</p>
+                </div>
+            </div>
+        </div>
+        <h2 class="page-header">How it works for Sellers</h2>
+       <div class="row">
+            <div class="col-6">
+                <div class="card" style="text-align: center; padding: 30px 10px 30px 10px;">
+                    <div>
+                        <img src="{{ url_for('static', filename='images/edit.svg') }}" width="100px" height="100px" alt="">
+                    </div>
+                    <p style="margin-top: 15px;">1. <a href="{{ url_for('posts.search_posts') }}">Create</a> a post in your local area.</p>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card" style="text-align: center; padding: 30px 10px 30px 10px;">
+                    <div>
+                        <img src="{{ url_for('static', filename='images/watch.svg') }}" width="100px" height="100px" alt="">
+                    </div>
+                    <p style="margin-top: 15px;">2. Relax and wait for Buyers to find your post and express their interest.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="card" style="text-align: center; padding: 30px 10px 30px 10px;">
+                    <div>
+                        <img src="{{ url_for('static', filename='images/map.svg') }}" width="100px" height="100px" alt="">
+                    </div>
+                    <p style="margin-top: 15px;">3. Discuss exchange details, including location, time, transaction amount, and transaction means (cash, wire, lightning, etc.).</p>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card" style="text-align: center; padding: 30px 10px 30px 10px;">
+                    <div>
+                        <img src="{{ url_for('static', filename='images/repeat.svg') }}" width="100px" height="100px" alt="">
+                    </div>
+                    <p style="margin-top: 15px;">4. Meet IRL and complete the planned exchange.</p>
+                </div>
+            </div>
+        </div>
+        <h2 class="page-header">Some additional suggestions</h2>
+        <p>Here are some additional suggestions for making the exchange process as seamless as possible.</p>
+        <ul>
+            <li>Meet in a public location, with plenty of people around.</li>
+            <li>For larger transactions, ask to wait for at least one blockchain confirmation (more if time permits). Here is a decent <a href="https://www.buybitcoinworldwide.com/confirmations/">source</a> for some additional information concerning bitcoin blockchain confirmations.</li>
+            <li>Try to discuss and confirm all of the details concerning the exchange prior to meeting in order to make the experience as efficient as possible.</li>
+        </ul>
+        <p>Feel free to send additional suggestions to <a href="mailto:support@btcbytme.com">support@btcbytme.com</a>, such that they could then find their way onto this list.</p>
+    </div>
+{% endblock %}

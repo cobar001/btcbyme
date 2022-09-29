@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container">
+        <h2 class="page-header">Messages</h2>
+        {% if user_message_threads_data %}
+            {% for thread in user_message_threads_data %}
+                <div class="card">
+                    <div class="card-body">
+                        <p>Subject post: <a href="{{ thread.post_url }}" class="card-link">{{ thread.post_url }}</a></p>
+                        <p>Post owner: {{ thread.recipient_username }} <br> Interested user: {{ thread.sender_username }}</p>
+                        <small class="text-muted">Most recent activity: {{ thread.date_updated_local }}</small>
+                        <a href="{{ url_for('messages.message_thread', thread_id=thread.id) }}" class="stretched-link"></a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No messages yet!</p>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required metadata tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <!-- Mapbox JS/CSS -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+
+    {% if title %}
+        <title>{{ title }}</title>
+    {% else %}
+        <title>BtcByMe</title>
+    {% endif %}
+    <link rel="icon" href="{{ url_for('static', filename='images/btcbyme.png') }}" type="image/x-icon">
+</head>
+<body>
+    <div id="main-wrapper">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+            <a class="navbar-brand" href="/">
+                <img src="{{ url_for('static', filename='images/btcbyme.png') }}" width="30" height="30" class="d-inline-block align-top" alt="">
+                BtcByMe
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarsExample05">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index.about') }}">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index.how_it_works') }}">How it works</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('posts.search_posts') }}">Search</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav my-2">
+                    {% if current_user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('users.account') }}">Account</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('users.login') }}">Log in</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('users.register') }}">Sign up</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+        <main role="main">
+            <div class="container">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+            {% block content %} {% endblock %}
+        </main>
+        <div class="push"></div>
+    </div>
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+            <div class="col-12 col-md">
+                <img class="mb-2" src="{{ url_for('static', filename='images/btcbyme.png') }}" alt="" width="32" height="32">
+                <small class="d-block mb-3 text-muted" style="color: white !important;">&copy; 2021 BtcByMe</small>
+            </div>
+            <div class="col-md">
+                <h5 style="margin-bottom: 15px;">Donate Here</h5>
+                <!-- Following script and form copied from BTCPay Server -->
+                <script>if(!window.btcpay){    var head = document.getElementsByTagName('head')[0];   var script = document.createElement('script');   script.src='https://busybtc.dev/modal/btcpay.js';   script.type = 'text/javascript';   head.append(script);}function onBTCPayFormSubmit(event){    var xhttp = new XMLHttpRequest();    xhttp.onreadystatechange = function() {        if (this.readyState == 4 && this.status == 200) {            if(this.status == 200 && this.responseText){                var response = JSON.parse(this.responseText);                window.btcpay.showInvoice(response.invoiceId);            }        }    };    xhttp.open("POST", event.target.getAttribute('action'), true);    xhttp.send(new FormData( event.target ));}</script><style type="text/css"> .btcpay-form { display: inline-flex; align-items: center; justify-content: center; } .btcpay-form--inline { flex-direction: row; } .btcpay-form--block { flex-direction: column; } .btcpay-form--inline .submit { margin-left: 15px; } .btcpay-form--block select { margin-bottom: 10px; } .btcpay-form .btcpay-custom-container{ text-align: center; }.btcpay-custom { display: flex; align-items: center; justify-content: center; } .btcpay-form .plus-minus { cursor:pointer; font-size:25px; line-height: 25px; background: #DFE0E1; height: 30px; width: 45px; border:none; border-radius: 60px; margin: auto 5px; display: inline-flex; justify-content: center; } .btcpay-form select { -moz-appearance: none; -webkit-appearance: none; appearance: none; color: currentColor; background: transparent; border:1px solid transparent; display: block; padding: 1px; margin-left: auto; margin-right: auto; font-size: 11px; cursor: pointer; } .btcpay-form select:hover { border-color: #ccc; } #btcpay-input-price { -moz-appearance: none; -webkit-appearance: none; border: none; box-shadow: none; text-align: center; font-size: 25px; margin: auto; border-radius: 5px; line-height: 35px; background: #fff; } #btcpay-input-price::-webkit-outer-spin-button, #btcpay-input-price::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; } </style>
+                <form method="POST"  onsubmit="onBTCPayFormSubmit(event);return false"  action="https://busybtc.dev/api/v1/invoices" class="btcpay-form btcpay-form--block">
+                    <input type="hidden" name="storeId" value="13dmJihKiBc4UbDFRKDYrCrQku6gJP39m1n2zRcgbYni" />
+                    <input type="hidden" name="jsonResponse" value="true" />
+                    <div class="btcpay-custom-container">
+                        <div class="btcpay-custom">
+                            <button class="plus-minus" onclick="event.preventDefault(); var price = parseInt(document.querySelector('#btcpay-input-price').value); if ('-' == '-' && (price - 1) < 1) { return; } document.querySelector('#btcpay-input-price').value = parseInt(document.querySelector('#btcpay-input-price').value) - 1;">-</button>
+                            <input id="btcpay-input-price" name="price" type="text" min="1" max="200" step="1" value="10" style="width: 2em;" oninput="event.preventDefault();isNaN(event.target.value) || event.target.value <= 0 ? document.querySelector('#btcpay-input-price').value = 10 : event.target.value"  />
+                            <button class="plus-minus" onclick="event.preventDefault(); var price = parseInt(document.querySelector('#btcpay-input-price').value); if ('+' == '-' && (price - 1) < 1) { return; } document.querySelector('#btcpay-input-price').value = parseInt(document.querySelector('#btcpay-input-price').value) + 1;">+</button>
+                        </div>
+                        <select name="currency">
+                            <option value="USD" selected>USD</option>
+                            <option value="GBP">GBP</option>
+                            <option value="EUR">EUR</option>
+                            <option value="BTC">BTC</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="submit" name="submit" style="min-width:146px; min-height:40px; border-radius: 4px;border-style: none;background-color: #0f3b21;" alt="Pay with BtcPay, Self-Hosted Bitcoin Payment Processor"><span style="color:#fff">Donate with</span>
+                        <img src="https://busybtc.dev/img/logo.svg" style="height:40px;display:inline-block;padding: 5% 0 5% 5px;">
+                    </button>
+                </form>
+            </div>
+            <div class="col-md">
+                <h5>Useful Links</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="{{ url_for('index.terms_of_service') }}">Terms of Service</a></li>
+                    <li><a class="text-muted" href="{{ url_for('index.about') }}">About</a></li>
+                    <li><a class="text-muted" href="{{ url_for('index.how_it_works') }}">How it works</a></li>
+                    <li><a class="text-muted" href="{{ url_for('posts.search_posts') }}">Search posts</a></li>
+                </ul>
+                <p>Contact: <a href="mailto:support@btcbytme.com">support@btcbytme.com</a></p>
+            </div>
+        </div>
+    </footer>
+    <!-- jQuery, Popper.js, and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+</body>
+</div>
+</html>

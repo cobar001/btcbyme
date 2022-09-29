@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container">
+        <h2 class="page-header">My Posts</h2>
+        <div>
+            <a class="btn btn-primary" href="{{ url_for('posts.new_post') }}" role="button" style="margin-top: 15px;">New Post</a>
+        </div>
+        {% if posts %}
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
+            {% for post in posts %}
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ post.btc_price }} <small>{{ post.currency }}/BTC</small></h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ post.author_username }}</h6>
+                            <p><b>Markup:</b><br>{{ post.markup_percentage }}</p>
+                            <p><b>Transaction Range:</b><br>{{ post.min_tx }} - {{ post.max_tx }}</p>
+                            <p>Location:<br>{{ post.city }}</p>
+                            <div>
+                                <!--TODO:Add modal confirmation-->
+                                <button type="button" class="btn btn-outline-danger" onclick="location.href='{{ url_for('posts.delete_post', post_id=post.id) }}'">
+                                    Delete
+                                </button>
+                            </div>
+                            <div>
+                                <small class="text-muted">Date posted: {{ post.date_posted }}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        {% else %}
+            <p style="margin-top: 30px;">Looks like you have no posts.</p>
+        {% endif %}
+    </div>
+{% endblock %}

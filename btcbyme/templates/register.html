@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container content-section">
+        <h2 id="register-header">Register an account</h2>
+        <p>Since we do not ask for any personal information, such as an email or phone number, there is no way to recover your account if you lose your password. With this in mind, please make an effort to remember or write down your password.</p>
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.username.label(class="form-control-label") }}
+                {% if form.username.errors %}
+                    {{ form.username(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.username.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.username(class="form-control") }}
+                {% endif %}
+                <small class="form-text text-muted">Username length should be in the range of 5 to 20 characters and consist of only underscores and alphanumeric values.</small>
+            </div>
+            <div class="form-group">
+                {{ form.password.label(class="form-control-label") }}
+                {% if form.password.errors %}
+                    {{ form.password(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.password(class="form-control") }}
+                {% endif %}
+                <small class="form-text text-muted">Password should be at least 6 characters in length.</small>
+            </div>
+            <div class="form-group">
+                {{ form.confirm_password.label(class="form-control-label") }}
+                {% if form.confirm_password.errors %}
+                    {{ form.confirm_password(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.confirm_password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.confirm_password(class="form-control") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-primary", id="register-button") }}
+            </div>
+            <div class="border-top pt-3">
+                <small class="text-muted">
+                    Already have an account? <a class="ml-2" href="{{ url_for('users.login') }}">Log in</a>
+                </small>
+            </div>
+        </form>
+    </div>
+{% endblock %}

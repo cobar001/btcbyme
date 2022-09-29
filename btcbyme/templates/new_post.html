@@ -1,0 +1,110 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container">
+        <h2 class="page-header">New Post</h2>
+        <div class="content-section">
+            <form method="POST" action="">
+                {{ form.hidden_tag() }}
+                <div class="row form-group">
+                    <div class="col">
+                        {{ form.markup.label(class="form-control-label") }}
+                        <div class="input-group mb-2">
+                            {% if form.markup.errors %}
+                                {{ form.markup(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.markup.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.markup(class="form-control") }}
+                            {% endif %}
+                            <div class="input-group-append">
+                                <div class="input-group-text">%</div>
+                            </div>
+                        </div>
+                        <small class="form-text text-muted">This is the percentage of the current Bitcoin price to add to the posted price. For example. a 10% markup of a $10,000 price would result in a final posting price of $11,000.</small>
+                    </div>
+                    <div class="col">
+                        {{ form.currency.label(class="form-control-label") }}
+                        {{ form.currency(class="form-control") }}
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col">
+                        {{ form.min_tx.label(class="form-control-label") }}
+                        {% if form.min_tx.errors %}
+                            {{ form.min_tx(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.min_tx.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.min_tx(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div class="col">
+                        {{ form.max_tx.label(class="form-control-label") }}
+                        {% if form.max_tx.errors %}
+                            {{ form.max_tx(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.max_tx.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.max_tx(class="form-control") }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col">
+                        {{ form.city.label(class="form-control-label") }}
+                        {% if form.city.errors %}
+                            {{ form.city(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.city.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.city(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div class="col">
+                        {{ form.region.label(class="form-control-label") }}
+                        {% if form.region.errors %}
+                            {{ form.region(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.region.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.region(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div class="col">
+                        {{ form.country.label(class="form-control-label") }}
+                        {% if form.country.errors %}
+                            {{ form.country(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.country.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.country(class="form-control") }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col">
+                        {{ form.submit(class="col btn btn-primary", id="register-button") }}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

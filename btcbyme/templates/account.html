@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container">
+        <div style="text-align: center;">
+            <h1 class="page-header">Hi, {{ user_view_data.username }}!</h1>
+            <h5><small class="text-muted">User since: {{ user_view_data.local_date_created }}</small></h5>
+        </div>
+        <div class="content-section" style="margin-top: 30px; padding-bottom: 30px;">
+            <h3 class="page-header" style="margin-top: 15px;"><a href="{{ url_for('posts.index_posts') }}">My Posts</a></h3>
+            {% if user_posts %}
+                <div class="row row-cols-1 row-cols-lg-3">
+                {% for post in user_posts %}
+                    <div class="col">
+                        <div class="card" style="margin-top: 15px;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ post.btc_price }} <small>{{ post.currency }}/BTC</small></h5>
+                                <h6 class="card-subtitle mb-2 text-muted">{{ post.author_username }}</h6>
+                                <p><b>Markup:</b><br>{{ post.markup_percentage }}</p>
+                                <p><b>Transaction Range:</b><br>{{ post.min_tx }} - {{ post.max_tx }}</p>
+                                <p>Location:<br>{{ post.city }}</p>
+                                <div>
+                                    <small class="text-muted">Date posted: {{ post.date_posted }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+            {% else %}
+                <p>No posts yet! Start a new post <a href="{{ url_for('posts.new_post') }}">here</a>!</p>
+            {% endif %}
+        </div>
+        <div class="content-section" style="margin-top: 30px; padding-bottom: 30px;">
+            <h3 class="page-header" style="margin-top: 15px;"><a href="{{ url_for('messages.index_messages') }}">My Message Threads</a></h3>
+            {% if message_threads %}
+                {% for thread in message_threads %}
+                    <div class="card">
+                        <div class="card-body">
+                            <p>Subject post: <a href="{{ thread.post_url }}" class="card-link">{{ thread.post_url }}</a></p>
+                            <p>Post owner: {{ thread.recipient_username }} <br> Interested user: {{ thread.sender_username }}</p>
+                            <small class="text-muted">Most recent activity: {{ thread.date_updated_local }}</small>
+                            <a href="{{ url_for('messages.message_thread', thread_id=thread.id) }}" class="stretched-link"></a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No message threads yet! Search for posts to inquire about <a href="{{ url_for('posts.search_posts') }}">here</a>!</p>
+            {% endif %}
+        </div>
+        <div class="content-section" style="margin-top: 30px; padding-bottom: 30px;">
+            <h3 class="page-header" style="margin-top: 15px;">User Management</h3>
+            <p style="margin-top: 30px;">
+                <a class="btn btn-danger mb-2" href="{{ url_for('users.logout') }}">Log out</a>
+                <a class="btn btn-danger mb-2" href="{{ url_for('users.delete') }}">Delete account</a>
+            </p>
+        </div>
+    </div>
+{% endblock %}

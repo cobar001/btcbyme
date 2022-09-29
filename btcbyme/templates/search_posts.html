@@ -1,0 +1,148 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container">
+        <h2 class="page-header">Search Posts</h2>
+        <div class="content-section">
+            <form method="POST" action="">
+                {{ form.hidden_tag() }}
+                <div class="row form-group">
+                    <div class="col">
+                        {{ form.max_markup.label(class="form-control-label") }}
+                        <div class="input-group mb-2">
+                            {% if form.max_markup.errors %}
+                                {{ form.max_markup(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.max_markup.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.max_markup(class="form-control") }}
+                            {% endif %}
+                            <div class="input-group-append">
+                                <div class="input-group-text">%</div>
+                            </div>
+                        </div>
+                        <small class="form-text text-muted">This is the percentage of the current Bitcoin price to add to the posted price. For example. a 10% markup of a $10,000 price would result in a final posting price of $11,000.</small>
+                    </div>
+                    <div class="col">
+                        {{ form.currency.label(class="form-control-label") }}
+                        {{ form.currency(class="form-control") }}
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col">
+                        {{ form.city.label(class="form-control-label") }}
+                        {% if form.city.errors %}
+                            {{ form.city(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.city.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.city(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div class="col">
+                        {{ form.region.label(class="form-control-label") }}
+                        {% if form.region.errors %}
+                            {{ form.region(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.region.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.region(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div class="col">
+                        {{ form.country.label(class="form-control-label") }}
+                        {% if form.country.errors %}
+                            {{ form.country(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.country.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.country(class="form-control") }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col">
+                        {{ form.desired_tx_amount.label(class="form-control-label") }}
+                        {% if form.desired_tx_amount.errors %}
+                            {{ form.desired_tx_amount(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.desired_tx_amount.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.desired_tx_amount(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div class="col">
+                        {{ form.search_distance.label(class="form-control-label") }}: <label class="form-control-label" id="distanceInput"> 0 miles</label>
+                        {{ form.search_distance(class="form-control", value="0", min="0", max="50", onchange="updateTextInput(this.value);") }}
+                    </div>
+                    <div class="col">
+                        {{ form.sort_by.label(class="form-control-label") }}
+                        {{ form.sort_by(class="form-control") }}
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col">
+                        {{ form.submit(class="col btn btn-primary", id="register-button") }}
+                    </div>
+                </div>
+            </form>
+        </div>
+        <p>
+            {% if original_btc_price %}
+                <i>Current BTC price: {{ original_btc_price }}</i>
+            {% endif %}
+            {% if geocoded_post_data and original_btc_price %}
+                <br>
+            {% endif %}
+            {% if geocoded_post_data %}
+                <i>Displaying results for location: {{ geocoded_post_data.place_name }}</i>
+            {% endif %}
+        </p>
+        <div class="border-top pt-3" style="height: 500px; overflow-x: hidden; overflow-y: auto;">
+            {% if posts %}
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
+                    {% for post in posts %}
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ post.btc_price }} <small>{{ post.currency }}/BTC</small></h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">{{ post.author_username }}</h6>
+                                    <p><b>Markup:</b><br>{{ post.markup_percentage }}</p>
+                                    <p><b>Transaction Range:</b><br>{{ post.min_tx }} - {{ post.max_tx }}</p>
+                                    <p>Location:<br>{{ post.city }}</p>
+                                    <div>
+                                        <a href="{{ url_for('messages.new_message_thread', post_id=post.id) }}" class="card-link">Send Message</a>
+                                    </div>
+                                    <div>
+                                        <small class="text-muted">Date posted: {{ post.date_posted }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No posts match your current search criteria.</p>
+            {% endif %}
+        </div>
+    </div>
+    <script>
+        function updateTextInput(val) {
+            document.getElementById('distanceInput').innerText = ' ' + val + ' miles';
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,80 @@
+html, body {
+    height: 100%;
+}
+
+#main-wrapper {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -200px; /* the bottom margin is the negative value of the footer's height */
+}
+
+.push {
+    height: 200px;
+}
+
+footer {
+    /*padding: 15px;*/
+    text-align: center;
+    color: white;
+    background-color: #343a3f;
+    margin-top: 30px;
+    height: 200px; /* .push must be the same height as .footer */
+}
+
+footer div {
+    background-color: #343a3f;
+}
+
+#index-jumbotron {
+    height: 450px;
+}
+
+.bg-cover {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.jumbotron {
+    width: 100%;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.8) 100%), url(../images/bitcoin.jpg);
+}
+
+.card {
+    margin-right: 30px;
+    margin-top: 30px;
+}
+
+.card:last-of-type {
+    margin-right: 0;
+}
+
+.content-section {
+  background: #ffffff;
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+#register-header {
+    margin-bottom: 15px;
+}
+
+#register-button {
+    margin-top: 30px;
+}
+
+#login-button {
+    margin-top: 30px;
+}
+
+.form-control-label {
+    font-weight: bold;
+}
+
+.page-header {
+    margin-top: 30px;
+}

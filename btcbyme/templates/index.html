@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div id="index-jumbotron" class="jumbotron jumbotron-fluid bg-cover text-white">
+        <div class="container">
+            <h1 class="display-5">Local, private, and physical, peer-to-peer Bitcoin exchange.</h1>
+            <p class="lead">Find local Bitcoin users in your community to meet and exchange fiat currencies for Bitcoin, off the record.</p>
+        </div>
+    </div>
+    <div class="container">
+        <h3>Check out some of the most recent posts. Refine your search <a href="{{ url_for('posts.search_posts') }}">here</a>.</h3>
+        {% if posts %}
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
+            {% for post in posts %}
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ post.btc_price }} <small>{{ post.currency }}/BTC</small></h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ post.author_username }}</h6>
+                            <p><b>Markup:</b><br>{{ post.markup_percentage }}</p>
+                            <p><b>Transaction Range:</b><br>{{ post.min_tx }} - {{ post.max_tx }}</p>
+                            <p>Location:<br>{{ post.city }}</p>
+                            <div>
+                                <a href="{{ url_for('messages.new_message_thread', post_id=post.id) }}" class="card-link">Send Message</a>
+                            </div>
+                            <div>
+                                <small class="text-muted">Date posted: {{ post.date_posted }}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        {% else %}
+            <p>No posts available in your area. Please check back later.</p>
+        {% endif %}
+        <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+    </div>
+{% endblock %}
